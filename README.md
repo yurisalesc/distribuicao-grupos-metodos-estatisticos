@@ -9,14 +9,16 @@ Para cada método, os 18 alunos avaliados pelo questionário formam a base orgâ
 ## 1. Agrupamento Espacial (K-Means Clustering) e Amostragem Estratificada
 
 ### Fundamentação Estatística e Modelagem
-Aplica-se a técnica não-supervisionada de *Clustering* (K-Means) objetivando a minimização da Soma dos Quadrados dos Erros (SSE) intra-cluster no hiperespaço Euclidiano ortogonal. Extraem-se centróides locais correspondentes aos "nichos comportamentais" dos 18 alunos avaliados, limitando-o à fragmentação teórica local em amostras de K=6. Posteriormente, aplica-se os princípios de uma Amostragem Estratificada: a matriz recolhe e pulveriza componentes de cada estrato gerado sobre os três grupos base, garantindo a representação de nichos multivariados e homogeneidade populacional inter-grupos.
+Aplica-se a técnica não-supervisionada de *Clustering* (K-Means) objetivando a minimização da Soma dos Quadrados dos Erros (SSE) intra-cluster no hiperespaço Euclidiano ortogonal. Extraem-se **K=3 centróides** correspondentes aos "nichos comportamentais" dos 18 alunos avaliados, particionando o espaço tridimensional de soft skills em estratos homogêneos. 
+
+Posteriormente, aplica-se rigorosamente os princípios de **Amostragem Estratificada com Distribuição Balanceada**: cada estrato (cluster) tem seus elementos distribuídos proporcionalmente entre os três grupos finais usando round-robin, garantindo que cada grupo contenha representantes de **todos** os perfis identificados. Esta estratégia maximiza o **Índice de Diversidade de Shannon** intra-grupos e assegura heterogeneidade populacional maximizada.
 
 ### Prós e Contras
-*   **Prós:** Matematicamente desenhado para forçar a maior diversificação (heterogeneidade) paralela de equipes possível.
-*   **Contras:** Restringe o poder do K-Means ao fixar rigidamente K=6 num universo limitadíssimo (N=18). Pode forçar agrupamentos espúrios e artificiais caso as variâncias não justifiquem mais que dois polos reais na sala pura.
+*   **Prós:** Matematicamente fundamentado para garantir máxima diversificação (heterogeneidade) de equipes. Cada cluster é distribuído proporcionalmente (n/k alunos por grupo), assegurando que todos os grupos tenham representação balanceada de todos os perfis. K=3 alinha perfeitamente com os 3 grupos finais, eliminando complexidade desnecessária.
+*   **Contras:** Clusters com poucos elementos (n < k) não podem ser perfeitamente distribuídos entre todos os grupos. Com escala Likert 1-4, coordenadas duplicadas reduzem diversidade natural dos dados (18 alunos → 11 posições únicas), podendo gerar clusters desbalanceados.
 
 ### Como o Algoritmo Aloca as Pessoas (Dinâmica Explicativa)
-A animação GIF abaixo demonstra exatamente o ato estratigráfico: Sorteia-se 1 aluno de cada Nicho formado pelo k-Means e o encaminha por vez a um Grupo, garantindo times diversos. Repare que as barras vão sendo preenchidas por um indivíduo diferente de cada vez! O script "puxa" uma cor psíquica diferente ciclicamente (clusterização), até cada calha lotar matematicamente as 6 vagas residuais em paralelo!
+A animação GIF demonstra a estratégia estratigráfica balanceada: Para **cada cluster** identificado pelo K-Means, o algoritmo reinicia a distribuição round-robin do Grupo 1, garantindo dispersão uniforme. Repare que as barras recebem sistematicamente alunos de cores diferentes (clusters) em padrão intercalado! Cluster 0 distribui 2 alunos por grupo, Cluster 1 distribui 4-4-3 (máximo balanceamento de 11 elementos), assegurando que nenhum grupo fique concentrado em um único perfil comportamental.
 
 ### Visualização dos Dados
 ![Gráfico Clustering M1 Estático](grafico_metodo_1_clusters.png)
